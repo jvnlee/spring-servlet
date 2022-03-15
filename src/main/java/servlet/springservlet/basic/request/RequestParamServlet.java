@@ -14,7 +14,7 @@ public class RequestParamServlet extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         /*
         request.getParameter()는 GET 메서드로 요청을 보내는 URL의 쿼리 파라미터 뿐만 아니라
-        POST 메서드로 요청을 보내는 HTML Form의 개별 데이터도 모두 인식할 수 있다.
+        POST 메서드로 데이터를 메시지 body에 담아 요청을 보내는 HTML Form의 개별 데이터도 모두 인식할 수 있다.
          */
 
         System.out.println("--- 전체 파라미터 조회 START ---");
