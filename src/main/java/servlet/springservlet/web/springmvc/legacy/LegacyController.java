@@ -11,18 +11,22 @@ import javax.servlet.http.HttpServletResponse;
 public class LegacyController implements Controller {
 
     /*
-    Controller 인터페이스를 구현하는 방식은 레거시 방식
+    ModelAndView 인스턴스를 반환하도록 변경
 
-    @Component 어노테이션을 붙여 애플리케이션 실행 시 컨테이너에 Bean으로 등록해줌
-    스프링 MVC에서 요청 URL을 처리하기 위한 컨트롤러(핸들러)를 정하려고 사용하는 HandlerMapping은 여기서는 BeanNameUrlHandlerMapping 이고,
-    이 컨트롤러를 실제로 호출해줄 수 있는 어댑터를 정하려고 사용하는 HandlerAdapter는 여기서는 SimpleControllerHandlerAdapter임.
-    둘 다 스프링에 내장된 구현체들이기 때문에 별도의 HandlerMapping이나 HandlerAdapter를 구현하지 않고도 알맞은 어댑터를 통해 이 컨트롤러를 호출할 수 있었던 것.
+    스프링 부트는 애플리케이션 실행 시 InternalResourceViewResolver라는 뷰 리졸버를 자동으로 등록하는데,
+    뷰 리졸버는 application.properties에 미리 지정했던 view 경로의 prefix와 suffix를 사용해서
+    ModelAndView 인스턴스의 논리 이름에 앞뒤로 prefix과 suffix가 붙여 완전한 물리 경로를 완성시켜줌
+
+    뷰 리졸버는 이러한 내부 로직 이후 InternalResourceView 인스턴스를 반환하고
+    DispatcherServlet이 이 인스턴스에 대한 render()를 호출해 JSP로 forward함
+    (InternalResourceView는 View 인터페이스의 구현체 중 하나로, JSP 방식을 사용하기 위해 forward()가 있지만
+    나머지 View 구현체들은 JSP를 안쓰기 때문에 forward() 없이 바로 뷰 렌더링으로 들어감)
     */
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         System.out.println("LegacyController.handleRequest");
-        return null;
+        return new ModelAndView("new-form");
     }
 
 }
